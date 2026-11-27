@@ -1,0 +1,196 @@
+/* Core Asciidoctor structural stylesheet (lightweight, offline-friendly) */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans", sans-serif;
+  line-height: 1.65;
+  word-wrap: break-word;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.25;
+  margin-top: 1.4em;
+  margin-bottom: 0.55em;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-top: 0;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--border-color);
+}
+
+h2 {
+  font-size: 1.5rem;
+  padding-bottom: 0.2em;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+h3 { font-size: 1.25rem; }
+h4 { font-size: 1.1rem; }
+
+p {
+  margin: 0 0 1em 0;
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+ul, ol {
+  margin: 0 0 1em 0;
+  padding-left: 1.6em;
+}
+
+li > p {
+  margin-bottom: 0.4em;
+}
+
+dl dt {
+  font-weight: 600;
+  margin-top: 0.75em;
+}
+
+dl dd {
+  margin-left: 1.25em;
+  margin-bottom: 0.5em;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--border-color);
+  margin: 1.5em 0;
+}
+
+code, pre {
+  font-family: "JetBrains Mono", "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+:not(pre) > code {
+  font-size: 0.9em;
+  padding: 0.15em 0.35em;
+  border-radius: 4px;
+  background-color: var(--code-bg);
+}
+
+pre {
+  margin: 0 0 1.2em 0;
+  padding: 0.9em 1.1em;
+  border-radius: 8px;
+  background-color: var(--code-bg);
+  border: 1px solid var(--border-subtle);
+  overflow-x: auto;
+  line-height: 1.45;
+  font-size: 0.9rem;
+}
+
+pre code {
+  background: transparent;
+  padding: 0;
+}
+
+.listingblock .title,
+.exampleblock .title,
+.tableblock .title,
+.imageblock .title,
+.admonitionblock .title {
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--muted-text);
+  margin-bottom: 0.4em;
+}
+
+blockquote, .quoteblock blockquote {
+  margin: 0 0 1em 0;
+  padding: 0.6em 1em;
+  border-left: 4px solid var(--accent-color);
+  background-color: var(--surface-variant);
+  border-radius: 0 6px 6px 0;
+}
+
+.quoteblock .attribution {
+  font-size: 0.9rem;
+  color: var(--muted-text);
+  margin-top: -0.5em;
+  margin-bottom: 1em;
+  padding-left: 1em;
+}
+
+.admonitionblock > table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 1em 0;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background-color: var(--surface-variant);
+}
+
+.admonitionblock td.icon {
+  width: 5.5rem;
+  padding: 0.75em;
+  font-weight: 700;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: center;
+  border-right: 1px solid var(--border-color);
+  color: var(--accent-color);
+  vertical-align: top;
+}
+
+.admonitionblock td.content {
+  padding: 0.75em 1em;
+}
+
+table.tableblock {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  display: block;
+  overflow-x: auto;
+}
+
+table.tableblock th,
+table.tableblock td {
+  border: 1px solid var(--border-color);
+  padding: 0.55em 0.75em;
+  text-align: left;
+  vertical-align: top;
+}
+
+table.tableblock thead th {
+  background-color: var(--surface-variant);
+  font-weight: 600;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.checklist {
+  list-style: none;
+  padding-left: 0.5em;
+}
+
+.sidebarblock, .exampleblock > .content {
+  padding: 1em;
+  margin: 1em 0;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  background-color: var(--surface-variant);
+}

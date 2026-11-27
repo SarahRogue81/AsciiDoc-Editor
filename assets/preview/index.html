@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AsciiDoc Preview</title>
+  <link rel="stylesheet" href="asciidoctor.css">
+  <link rel="stylesheet" href="preview_theme.css">
+  <script src="asciidoctor.min.js"></script>
+</head>
+<body class="article">
+  <div id="content" class="preview-root">
+    <p class="empty-placeholder">Start typing AsciiDoc to see a live preview…</p>
+  </div>
+  <script>
+    (function () {
+      const asciidoctor = typeof Asciidoctor === 'function' ? Asciidoctor() : null;
+      let lastRenderedHtml = '';
+      let lastTitle = 'AsciiDoc Document';
+
+      function decodeBase64Utf8(base64) {
+        if (!base64) return '';
+        const binary = atob(base64);
+        const bytes = new Uint8Array(binary.length);
+        for (let i = 0; i < binary.length; i++) {
+          bytes[i] = binary.charCodeAt(i);
+        }
+        return new TextDecoder('utf-8').decode(bytes);
+      }
+
+      function escapeHtml(text) {
+        return text
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;');
+      }
+
+      window.setTheme = function (mode) {
+        document.documentElement.setAttribute('data-theme', mode === 'dark' ? 'dark' : 'light');
+      };
+
+      window.renderAsciiDoc = function (base64Source) {
+        const container = document.getElementById('content');
+        if (!container) return;
+
+        const source = decodeBase64Utf8(base64Source);
+        if (!source.trim()) {
+          lastRenderedHtml = '';
+          lastTitle = 'AsciiDoc Document';
+          container.innerHTML = '<p class="empty-placeholder">Start typing AsciiDoc to see a live preview…</p>';
+          return;
+        }
+
+        if (!asciidoctor) {
+          container.innerHTML = '<pre>' + escapeHtml(source) + '</pre>';
+          lastRenderedHtml = container.innerHTML;
+          return;
+        }
+
+        try {
+          const doc = asciidoctor.load(source, {
+            safe: 'safe',
+            attributes: {
+              showtitle: true,
+              'sectanchors': true,
+              'table-caption': 'Table'
+            }
+          });
+          lastTitle = doc.getDocumentTitle({ sanitize: true }) || 'AsciiDoc Document';
+          const html = doc.convert();
+          lastRenderedHtml = html;
+          container.innerHTML = html;
+        } catch (err) {
+          container.innerHTML =
+            '<div class="render-error"><strong>Preview error:</strong> ' +
+            escapeHtml(String(err)) +
+            '</div>';
+        }
+      };
+
+      window.getExportHtml = function () {
+        const bodyHtml = lastRenderedHtml || '<p></p>';
+        return (
+          '<!DOCTYPE html>' +
+          '<html lang="en" data-theme="light">' +
+          '<head>' +
+          '<meta charset="UTF-8">' +
+          '<meta name="viewport" content="width=device-width, initial-scale=1.0">' +
+          '<title>' + escapeHtml(lastTitle) + '</title>' +
+          '<link rel="stylesheet" href="asciidoctor.css">' +
+          '<link rel="stylesheet" href="preview_theme.css">' +
+          '</head>' +
+          '<body class="article print-export">' +
+          '<div id="content" class="preview-root">' + bodyHtml + '</div>' +
+          '</body>' +
+          '</html>'
+        );
+      };
+    })();
+  </script>
+</body>
+</html>
