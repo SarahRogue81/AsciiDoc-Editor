@@ -81,7 +81,10 @@ class SafFileHandler(private val activity: Activity) {
 
         val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
-            type = "text/plain"
+            // Use application/octet-stream so Android's DocumentsProvider preserves
+            // the exact extension typed by the user (.adoc, .asciidoc, etc.) without
+            // appending ".txt".
+            type = "application/octet-stream"
             putExtra(Intent.EXTRA_TITLE, safeName)
             addFlags(
                 Intent.FLAG_GRANT_READ_URI_PERMISSION or
