@@ -51,12 +51,12 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: AsciiDoc-Editor-release-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: build/app/outputs/apk/release/AsciiDoc-Editor-release.apk
           if-no-files-found: error
 
       - name: Publish GitHub Release on tag
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
-          files: build/app/outputs/flutter-apk/app-release.apk
+          files: build/app/outputs/apk/release/AsciiDoc-Editor-release.apk
           generate_release_notes: true

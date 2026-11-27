@@ -4,6 +4,10 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
+base {
+    archivesName.set("AsciiDoc-Editor")
+}
+
 android {
     namespace = "com.sarahrogue81.asciidoc_editor"
     compileSdk = 37
